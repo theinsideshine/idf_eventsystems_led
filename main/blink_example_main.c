@@ -1,40 +1,37 @@
 #include <stdio.h>
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
+#include "esp_log.h"
+#include "config_manager.h"
 #include "led_control.h"
 #include "timer_control.h"
+#include "wifi_manager.h" // <-- Nuevo
 
-void app_main(void)
-{
-    // Instanciamos las estructuras (la memoria para nuestros módulos)
+static const char *TAG = "MAIN";
+
+void app_main(void) {
+    system_config_t mi_config;
     my_led_t status_led; 
     my_timer_t blink_timer;
     bool led_state = false;
 
-    // Inicialización: Configuramos el LED en el GPIO 48 y elegimos color
+    if (config_init(&mi_config) == ESP_OK) {
+        ESP_LOGI(TAG, "Configuracion NVS cargada.");
+    }
+
+    // Iniciamos WiFi con los datos de la NVS
+    wifi_init_sta(&mi_config); 
+
     led_init(&status_led, 48);          
-    led_set_color(&status_led, COLOR_GREEN); 
+    led_set_color(&status_led, (led_color_t)mi_config.led_color); 
     timer_start(&blink_timer);          
 
-    printf("Sistema iniciado. Parpadeo no bloqueante activo...\n");
-
     while (1) {
-        // Consultamos el timer: ¿Pasaron 500ms?
-        if (timer_expired(&blink_timer, 500)) { 
-            timer_start(&blink_timer); // Reiniciamos el cronómetro
-            
+        if (timer_expired(&blink_timer, mi_config.led_blink_time)) { 
+            timer_start(&blink_timer); 
             led_state = !led_state;
-            
-            if (led_state) {
-                led_on(&status_led);
-                printf("LED ON\n");
-            } else {
-                led_off(&status_led);
-                printf("LED OFF\n");
-            }
+            led_state ? led_on(&status_led) : led_off(&status_led);
         }
-
-        // El pequeño delay para que el perro guardián (Watchdog) esté feliz
         vTaskDelay(pdMS_TO_TICKS(10)); 
     }
 }
