@@ -5,7 +5,7 @@
 #include "esp_err.h"
 
 // --- DEFINES DE VALORES POR DEFECTO ---
-#define MAGIC_NUMBER                2222
+#define MAGIC_NUMBER                342
 #define LED_BLINK_TIME_DEFAULT      1010
 #define LED_BLINK_QUANTITY_DEFAULT  3
 #define LED_COLOR_DEFAULT           1
@@ -17,6 +17,9 @@
 // Defaults de WiFi
 #define WIFI_SSID_DEFAULT           "Pablo"
 #define WIFI_PASS_DEFAULT           "01410398716"
+
+// --- VERSIÓN DEL SISTEMA ---
+#define SW_VERSION "1.3.0"  // <--- Solo cambiás esto aquí
 
 // --- ESTRUCTURA DE CONFIGURACIÓN ---
 typedef struct {
