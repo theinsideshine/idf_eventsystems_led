@@ -4,12 +4,16 @@
 #include <stdint.h>
 #include "esp_err.h"
 
-// --- DEFINES DE VALORES POR DEFECTO ---
-#define MAGIC_NUMBER                342
+// ============================================================
+// DEFINES DE VALORES POR DEFECTO
+// ============================================================
+#define MAGIC_NUMBER                222
+
 #define LED_BLINK_TIME_DEFAULT      1010
 #define LED_BLINK_QUANTITY_DEFAULT  3
 #define LED_COLOR_DEFAULT           1
 #define ST_TEST_DEFAULT             0
+
 #define ST_MODE_TEST                0
 #define ST_MODE_DEMO                200
 #define ST_MODE_DEFAULT             ST_MODE_TEST
@@ -18,24 +22,69 @@
 #define WIFI_SSID_DEFAULT           "Pablo"
 #define WIFI_PASS_DEFAULT           "01410398716"
 
-// --- VERSIÓN DEL SISTEMA ---
-#define SW_VERSION "1.3.0"  // <--- Solo cambiás esto aquí
+// ============================================================
+// VERSIÓN DEL SISTEMA
+// ============================================================
+#define SW_VERSION                  "1.3.0"
 
-// --- ESTRUCTURA DE CONFIGURACIÓN ---
-typedef struct {
+// ============================================================
+// ESTRUCTURA DE CONFIGURACIÓN
+// ============================================================
+// En Fase 1 mantenemos la misma estructura para no romper
+// el código que ya funciona. Más adelante podremos separar
+// lo persistente de lo runtime.
+typedef struct
+{
     uint32_t led_blink_time;
     uint32_t led_blink_quantity;
     uint32_t led_color;
     uint32_t st_test;
     uint32_t st_mode;
     uint32_t log_level;
-    
     char wifi_ssid[32];
     char wifi_pass[64];
+
 } system_config_t;
 
-// --- PROTOTIPOS DE FUNCIONES ---
+// ============================================================
+// API PRINCIPAL
+// ============================================================
+// Mantiene compatibilidad con tu código actual:
+// - config_init(&mi_config)
+// - config_save(&mi_config)
 esp_err_t config_init(system_config_t *config);
 esp_err_t config_save(system_config_t *config);
+
+// ============================================================
+// API INTERNA DE MEMORIA / COPIA RAM
+// ============================================================
+// Estas funciones son el primer paso para dejar de acceder
+// directo a la estructura desde otros módulos.
+esp_err_t config_load(void);
+void config_set_defaults(void);
+
+// Getters
+uint32_t config_get_led_blink_time(void);
+uint32_t config_get_led_blink_quantity(void);
+uint32_t config_get_led_color(void);
+uint32_t config_get_st_test(void);
+uint32_t config_get_st_mode(void);
+uint32_t config_get_log_level(void);
+const char *config_get_wifi_ssid(void);
+const char *config_get_wifi_pass(void);
+
+// Setters
+void config_set_led_blink_time(uint32_t value);
+void config_set_led_blink_quantity(uint32_t value);
+void config_set_led_color(uint32_t value);
+void config_set_st_test(uint32_t value);
+void config_set_st_mode(uint32_t value);
+void config_set_log_level(uint32_t value);
+void config_set_wifi_ssid(const char *value);
+void config_set_wifi_pass(const char *value);
+
+// Copias completas
+void config_get_copy(system_config_t *config);
+void config_set_copy(const system_config_t *config);
 
 #endif
