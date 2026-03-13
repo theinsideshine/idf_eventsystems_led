@@ -11,8 +11,7 @@ static const char *NVS_NAMESPACE = "storage";
 
 // ------------------------------------------------------------
 // Copia RAM privada del módulo.
-// En Fase 1 esta estructura pasa a ser la "fuente de verdad"
-// en memoria. NVS solo se toca desde este archivo.
+// NVS solo se toca desde este archivo.
 // ------------------------------------------------------------
 static system_config_t s_config;
 
@@ -26,8 +25,6 @@ void config_set_defaults(void)
     s_config.led_blink_time     = LED_BLINK_TIME_DEFAULT;
     s_config.led_blink_quantity = LED_BLINK_QUANTITY_DEFAULT;
     s_config.led_color          = LED_COLOR_DEFAULT;
-    s_config.st_test            = ST_TEST_DEFAULT;
-    s_config.st_mode            = ST_MODE_DEFAULT;
     s_config.log_level          = 0;
 
     strncpy(s_config.wifi_ssid, WIFI_SSID_DEFAULT, sizeof(s_config.wifi_ssid) - 1);
@@ -39,7 +36,6 @@ void config_set_defaults(void)
 
 // ------------------------------------------------------------
 // Copia la RAM privada hacia una estructura externa.
-// Útil para mantener compatibilidad con tu código actual.
 // ------------------------------------------------------------
 void config_get_copy(system_config_t *config)
 {
@@ -53,8 +49,6 @@ void config_get_copy(system_config_t *config)
 
 // ------------------------------------------------------------
 // Copia una estructura externa hacia la RAM privada.
-// Útil cuando otros módulos trabajen con una copia local
-// y luego quieran sincronizarla.
 // ------------------------------------------------------------
 void config_set_copy(const system_config_t *config)
 {
@@ -68,16 +62,6 @@ void config_set_copy(const system_config_t *config)
 
 // ------------------------------------------------------------
 // Inicializa NVS y carga configuración.
-//
-// Mantiene compatibilidad con:
-//     system_config_t mi_config;
-//     config_init(&mi_config);
-//
-// Flujo:
-// 1) inicializa NVS
-// 2) pone defaults en RAM
-// 3) intenta cargar desde NVS
-// 4) copia la RAM privada al puntero externo
 // ------------------------------------------------------------
 esp_err_t config_init(system_config_t *config)
 {
@@ -92,24 +76,19 @@ esp_err_t config_init(system_config_t *config)
 
     ESP_ERROR_CHECK(err);
 
-    // Primero cargamos defaults en RAM.
-    // Si NVS no tiene datos válidos, el sistema sigue funcionando.
     config_set_defaults();
 
-    // Luego intentamos cargar desde NVS.
     err = config_load();
     if (err != ESP_OK)
     {
         ESP_LOGW(TAG, "Se usaran valores por defecto");
     }
 
-    // Mantener compatibilidad con el código actual.
     if (config != NULL)
     {
         *config = s_config;
     }
 
-    // --- BLOQUE DE BIENVENIDA POR UART ---
     printf("\n");
     printf("**********************************************\n");
     printf("* SISTEMA DE CONTROL DE ENSAYO               *\n");
@@ -148,17 +127,14 @@ esp_err_t config_load(void)
     {
         ESP_LOGW(TAG, "Primer inicio o config invalida. Cargando defaults...");
 
-        // Defaults ya están en s_config por config_set_defaults().
-        // Acá solo persistimos para dejar la NVS inicializada.
         nvs_set_u32(handle, "magic", MAGIC_NUMBER);
         nvs_set_u32(handle, "b_time", s_config.led_blink_time);
         nvs_set_u32(handle, "b_qty", s_config.led_blink_quantity);
         nvs_set_u32(handle, "l_color", s_config.led_color);
-        nvs_set_u32(handle, "st_test", s_config.st_test);
-        nvs_set_u32(handle, "st_mode", s_config.st_mode);
         nvs_set_u32(handle, "log_lvl", s_config.log_level);
         nvs_set_str(handle, "w_ssid", s_config.wifi_ssid);
         nvs_set_str(handle, "w_pass", s_config.wifi_pass);
+
         err = nvs_commit(handle);
         nvs_close(handle);
         return err;
@@ -166,13 +142,10 @@ esp_err_t config_load(void)
 
     ESP_LOGI(TAG, "Configuracion encontrada en NVS. Cargando...");
 
-    // Si alguna clave falla, mantenemos el valor ya cargado en RAM
-    // (que viene de defaults) para minimizar roturas.
+    // Si alguna clave falla, mantenemos el valor default ya cargado.
     nvs_get_u32(handle, "b_time", &s_config.led_blink_time);
     nvs_get_u32(handle, "b_qty", &s_config.led_blink_quantity);
     nvs_get_u32(handle, "l_color", &s_config.led_color);
-    nvs_get_u32(handle, "st_test", &s_config.st_test);
-    nvs_get_u32(handle, "st_mode", &s_config.st_mode);
     nvs_get_u32(handle, "log_lvl", &s_config.log_level);
 
     size = sizeof(s_config.wifi_ssid);
@@ -187,15 +160,13 @@ esp_err_t config_load(void)
 
 // ------------------------------------------------------------
 // Guarda una configuración en NVS.
-// Para no romper tu flujo actual, si recibe un puntero externo,
-// primero actualiza la copia RAM privada y después persiste.
+// Si recibe un puntero externo, primero actualiza la copia RAM.
 // ------------------------------------------------------------
 esp_err_t config_save(system_config_t *config)
 {
     nvs_handle_t handle;
     esp_err_t err;
 
-    // Si nos pasaron una config externa, la copiamos a la RAM privada.
     if (config != NULL)
     {
         s_config = *config;
@@ -211,8 +182,6 @@ esp_err_t config_save(system_config_t *config)
     nvs_set_u32(handle, "b_time", s_config.led_blink_time);
     nvs_set_u32(handle, "b_qty", s_config.led_blink_quantity);
     nvs_set_u32(handle, "l_color", s_config.led_color);
-    nvs_set_u32(handle, "st_test", s_config.st_test);
-    nvs_set_u32(handle, "st_mode", s_config.st_mode);
     nvs_set_u32(handle, "log_lvl", s_config.log_level);
     nvs_set_str(handle, "w_ssid", s_config.wifi_ssid);
     nvs_set_str(handle, "w_pass", s_config.wifi_pass);
@@ -240,16 +209,6 @@ uint32_t config_get_led_blink_quantity(void)
 uint32_t config_get_led_color(void)
 {
     return s_config.led_color;
-}
-
-uint32_t config_get_st_test(void)
-{
-    return s_config.st_test;
-}
-
-uint32_t config_get_st_mode(void)
-{
-    return s_config.st_mode;
 }
 
 uint32_t config_get_log_level(void)
@@ -284,16 +243,6 @@ void config_set_led_blink_quantity(uint32_t value)
 void config_set_led_color(uint32_t value)
 {
     s_config.led_color = value;
-}
-
-void config_set_st_test(uint32_t value)
-{
-    s_config.st_test = value;
-}
-
-void config_set_st_mode(uint32_t value)
-{
-    s_config.st_mode = value;
 }
 
 void config_set_log_level(uint32_t value)
