@@ -575,17 +575,22 @@ modular y desacoplado.
 
 ------------------------------------------------------------
 
+------------------------------------------------------------
+
 ## Demo Visual
 
-A continuación se muestra una vista de la interfaz web y una demo breve del sistema
-en funcionamiento, incluyendo la interacción desde navegador, la ejecución del blink
-en el LED físico y la salida de logs por consola.
+A continuación se muestra una vista de la interfaz web y una demo del sistema
+en funcionamiento, incluyendo:
+
+- interacción desde navegador
+- ejecución del blink en el LED físico
+- salida de logs en tiempo real
 
 ### Video de Demo
 
-[![Ver demo del sistema](images/web.png)](https://raw.githubusercontent.com/theinsideshine/idf_eventsystems_led/main/images/fase3_end.mp4)
+[![Ver demo del sistema](images/web.png)](https://youtu.be/HFf9titvheg)
 
-> Hacer clic sobre la imagen para reproducir la demo.
+> Hacer clic sobre la imagen para reproducir la demo en YouTube.
 
 
 La interfaz permite:
@@ -623,3 +628,4 @@ Autor: theinsideshine
 Licencia: MIT
 
 
+https://youtu.be/HFf9titvheg
