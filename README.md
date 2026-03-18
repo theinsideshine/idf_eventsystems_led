@@ -237,7 +237,7 @@ ESTADO DE EJECUCIÓN (volátil)
 
 ------------------------------------------------------------
 
-# Arquitectura Actual (Fase 2)
+# Arquitectura  (Fase 2)
 
 Browser
    |
@@ -260,7 +260,7 @@ Pero la ejecución todavía está centralizada.
 
 ------------------------------------------------------------
 
-# Fase 3 - Separación de Tareas (WEB + CORE)
+# Fase 3 - Separación de Tareas (WEB + CORE) Actual
 
 Esta fase introduce una arquitectura RTOS real.
 
@@ -583,13 +583,10 @@ en el LED físico y la salida de logs por consola.
 
 ### Video de Demo
 
-[![Ver demo del sistema](images/web.png)](images/fase3_end.mp4)
+[![Ver demo del sistema](images/web.png)](https://raw.githubusercontent.com/theinsideshine/idf_eventsystems_led/main/images/fase3_end.mp4)
 
 > Hacer clic sobre la imagen para reproducir la demo.
 
-### Captura de la Interfaz Web
-
-![Interfaz web de control](images/web.png)
 
 La interfaz permite:
 
