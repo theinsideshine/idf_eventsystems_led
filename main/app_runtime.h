@@ -1,8 +1,8 @@
 #ifndef APP_RUNTIME_H
 #define APP_RUNTIME_H
 
-#include <stdint.h>
 #include <stdbool.h>
+#include <stdint.h>
 
 typedef enum
 {
@@ -16,27 +16,22 @@ typedef enum
 typedef struct
 {
     bool running;
-    app_state_t state;
     uint32_t remaining;
+    app_state_t state;
 
 } app_runtime_t;
 
-// Inicializa el estado runtime del sistema
 void app_runtime_init(void);
 
-// Flag principal de ejecución del ensayo
 bool app_runtime_is_running(void);
-void app_runtime_set_running(bool value);
+void app_runtime_set_running(bool running);
 
-// Estado actual de la FSM
+uint32_t app_runtime_get_remaining(void);
+void app_runtime_set_remaining(uint32_t remaining);
+
 app_state_t app_runtime_get_state(void);
 void app_runtime_set_state(app_state_t state);
 
-// Cantidad de pulsos restantes
-uint32_t app_runtime_get_remaining(void);
-void app_runtime_set_remaining(uint32_t value);
-
-// Copia completa del runtime
-void app_runtime_get_copy(app_runtime_t *runtime);
+void app_runtime_get_copy(app_runtime_t *out);
 
 #endif

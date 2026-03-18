@@ -1,49 +1,81 @@
 #include "app_runtime.h"
-#include <stddef.h>
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
 
 static app_runtime_t s_runtime;
+static portMUX_TYPE s_runtime_mux = portMUX_INITIALIZER_UNLOCKED;
 
 void app_runtime_init(void)
 {
+    taskENTER_CRITICAL(&s_runtime_mux);
     s_runtime.running = false;
-    s_runtime.state = APP_STATE_INIT;
     s_runtime.remaining = 0;
+    s_runtime.state = APP_STATE_INIT;
+    taskEXIT_CRITICAL(&s_runtime_mux);
 }
 
 bool app_runtime_is_running(void)
 {
-    return s_runtime.running;
+    bool value;
+
+    taskENTER_CRITICAL(&s_runtime_mux);
+    value = s_runtime.running;
+    taskEXIT_CRITICAL(&s_runtime_mux);
+
+    return value;
 }
 
-void app_runtime_set_running(bool value)
+void app_runtime_set_running(bool running)
 {
-    s_runtime.running = value;
-}
-
-app_state_t app_runtime_get_state(void)
-{
-    return s_runtime.state;
-}
-
-void app_runtime_set_state(app_state_t state)
-{
-    s_runtime.state = state;
+    taskENTER_CRITICAL(&s_runtime_mux);
+    s_runtime.running = running;
+    taskEXIT_CRITICAL(&s_runtime_mux);
 }
 
 uint32_t app_runtime_get_remaining(void)
 {
-    return s_runtime.remaining;
+    uint32_t value;
+
+    taskENTER_CRITICAL(&s_runtime_mux);
+    value = s_runtime.remaining;
+    taskEXIT_CRITICAL(&s_runtime_mux);
+
+    return value;
 }
 
-void app_runtime_set_remaining(uint32_t value)
+void app_runtime_set_remaining(uint32_t remaining)
 {
-    s_runtime.remaining = value;
+    taskENTER_CRITICAL(&s_runtime_mux);
+    s_runtime.remaining = remaining;
+    taskEXIT_CRITICAL(&s_runtime_mux);
 }
 
-void app_runtime_get_copy(app_runtime_t *runtime)
+app_state_t app_runtime_get_state(void)
 {
-    if (runtime != NULL)
+    app_state_t value;
+
+    taskENTER_CRITICAL(&s_runtime_mux);
+    value = s_runtime.state;
+    taskEXIT_CRITICAL(&s_runtime_mux);
+
+    return value;
+}
+
+void app_runtime_set_state(app_state_t state)
+{
+    taskENTER_CRITICAL(&s_runtime_mux);
+    s_runtime.state = state;
+    taskEXIT_CRITICAL(&s_runtime_mux);
+}
+
+void app_runtime_get_copy(app_runtime_t *out)
+{
+    if (out == NULL)
     {
-        *runtime = s_runtime;
+        return;
     }
+
+    taskENTER_CRITICAL(&s_runtime_mux);
+    *out = s_runtime;
+    taskEXIT_CRITICAL(&s_runtime_mux);
 }

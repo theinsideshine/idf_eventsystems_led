@@ -1,0 +1,28 @@
+var searchData=
+[
+  ['la_20web_0',['Log de Comando Recibido desde la Web',['../index.html#autotoc_md33',1,'']]],
+  ['led_1',['IDF EventSystems LED',['../index.html',1,'']]],
+  ['led_5fblink_5fquantity_2',['led_blink_quantity',['../structapp__apply__config__t.html#aa470632bdd44132039195a83fad246c4',1,'app_apply_config_t::led_blink_quantity'],['../structsystem__config__t.html#a64e148c93559f8ebb5f16798101bea8b',1,'system_config_t::led_blink_quantity']]],
+  ['led_5fblink_5fquantity_5fdefault_3',['LED_BLINK_QUANTITY_DEFAULT',['../config__manager_8h.html#ad6e32a46e62f9227c3cb92ca3442a7bc',1,'config_manager.h']]],
+  ['led_5fblink_5ftime_4',['led_blink_time',['../structapp__apply__config__t.html#a8b295a4b0e9089b287aac681bcb3c131',1,'app_apply_config_t::led_blink_time'],['../structsystem__config__t.html#a9a7f89b8b216006e8eda7f32317ae0fb',1,'system_config_t::led_blink_time']]],
+  ['led_5fblink_5ftime_5fdefault_5',['LED_BLINK_TIME_DEFAULT',['../config__manager_8h.html#a10dfbad1c69822b5b2b92cf356b7b385',1,'config_manager.h']]],
+  ['led_5fcolor_6',['led_color',['../structapp__apply__config__t.html#a70a544facf6c080046676e705a63ed4f',1,'app_apply_config_t::led_color'],['../structsystem__config__t.html#a07c8ab771a2ed28f5f9eb06092c6d73e',1,'system_config_t::led_color']]],
+  ['led_5fcolor_5fdefault_7',['LED_COLOR_DEFAULT',['../config__manager_8h.html#ac9318a96bb567964adaa54491b5e2ad0',1,'config_manager.h']]],
+  ['led_5fcolor_5ft_8',['led_color_t',['../led__control_8h.html#a653c9a28baf93cfe8106400a53ecea2e',1,'led_control.h']]],
+  ['led_5fcontrol_2ec_9',['led_control.c',['../led__control_8c.html',1,'']]],
+  ['led_5fcontrol_2eh_10',['led_control.h',['../led__control_8h.html',1,'']]],
+  ['led_5finit_11',['led_init',['../led__control_8c.html#a4f51673935e7a320f357120d1f0b55d6',1,'led_init(my_led_t *led, int pin):&#160;led_control.c'],['../led__control_8h.html#a4f51673935e7a320f357120d1f0b55d6',1,'led_init(my_led_t *led, int pin):&#160;led_control.c']]],
+  ['led_5foff_12',['led_off',['../led__control_8c.html#a6d3dd9ccda50603d89dd9dcd78373491',1,'led_off(my_led_t *led):&#160;led_control.c'],['../led__control_8h.html#a6d3dd9ccda50603d89dd9dcd78373491',1,'led_off(my_led_t *led):&#160;led_control.c']]],
+  ['led_5fon_13',['led_on',['../led__control_8c.html#a98a11675bb59f3587aaada8796522209',1,'led_on(my_led_t *led):&#160;led_control.c'],['../led__control_8h.html#a98a11675bb59f3587aaada8796522209',1,'led_on(my_led_t *led):&#160;led_control.c']]],
+  ['led_5fset_5fcolor_14',['led_set_color',['../led__control_8c.html#a4896d7fb7225d6da12b8ba2144c90740',1,'led_set_color(my_led_t *led, led_color_t id):&#160;led_control.c'],['../led__control_8h.html#a04ee92821013393eb485105987f4815a',1,'led_set_color(my_led_t *led, led_color_t color_id):&#160;led_control.c']]],
+  ['log_20de_20comando_20recibido_20desde_20la_20web_15',['Log de Comando Recibido desde la Web',['../index.html#autotoc_md33',1,'']]],
+  ['log_20de_20encolado_20del_20comando_16',['Log de Encolado del Comando',['../index.html#autotoc_md35',1,'']]],
+  ['log_20de_20finalización_17',['Log de Finalización',['../index.html#autotoc_md43',1,'']]],
+  ['log_20de_20inicio_20del_20ensayo_18',['Log de Inicio del Ensayo',['../index.html#autotoc_md39',1,'']]],
+  ['log_20de_20procesamiento_20en_20core_5ftask_19',['Log de Procesamiento en CORE_TASK',['../index.html#autotoc_md37',1,'']]],
+  ['log_5flevel_20',['log_level',['../structsystem__config__t.html#aab12725d216cfaebd1103d9756b7f6bd',1,'system_config_t']]],
+  ['logs_21',['Objetivo Didáctico de Estos Logs',['../index.html#autotoc_md47',1,'']]],
+  ['logs_20de_20arranque_22',['Logs de Arranque',['../index.html#autotoc_md31',1,'']]],
+  ['logs_20de_20diagnóstico_20y_20flujo_20de_20ejecución_23',['Logs de Diagnóstico y Flujo de Ejecución',['../index.html#autotoc_md29',1,'']]],
+  ['logs_20de_20progreso_20del_20ensayo_24',['Logs de Progreso del Ensayo',['../index.html#autotoc_md41',1,'']]]
+];

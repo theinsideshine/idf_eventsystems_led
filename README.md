@@ -350,5 +350,279 @@ arquitectura orientada a eventos
 El objetivo es ayudar a los desarrolladores a entender cómo se estructura
 un firmware embebido profesional utilizando ESP-IDF y FreeRTOS.
 
+
+------------------------------------------------------------
+
+## Logs de Diagnóstico y Flujo de Ejecución
+
+Durante la Fase 3 se agregaron logs de diagnóstico para verificar tanto
+el arranque del firmware como el flujo completo de ejecución entre módulos.
+
+Estos logs permiten observar claramente la arquitectura RTOS implementada:
+
+Browser
+   |
+WEB SERVER
+   |
+APP QUEUE
+   |
+CORE TASK
+   |
+LED / TEST
+
+De esta forma se puede comprobar:
+
+- qué firmware está realmente ejecutándose
+- cuándo llega un comando desde la web
+- cuándo ese comando entra en la cola
+- cuándo la tarea CORE lo procesa
+- cómo avanza el ensayo hasta finalizar
+
+------------------------------------------------------------
+
+### Logs de Arranque
+
+Al inicio de `app_main()` se agregan los siguientes logs:
+
+```c
+ESP_LOGI("BOOTCHK", "SW_VERSION=%s", SW_VERSION);
+ESP_LOGI("BOOTCHK", "Compiled: %s %s", __DATE__, __TIME__);
+ESP_LOGI(TAG, "Inicializando Fase 3");
+```
+
+Ejemplo de salida:
+
+```text
+I (420) BOOTCHK: SW_VERSION=3.0.3
+I (420) BOOTCHK: Compiled: Mar 16 2026 15:12:43
+I (420) MAIN: Inicializando Fase 3
+```
+
+Explicación:
+
+- `SW_VERSION` muestra la versión lógica del firmware definida en el proyecto
+- `Compiled` muestra la fecha y hora exacta de compilación del binario
+- `Inicializando Fase 3` marca el inicio de la secuencia principal de arranque
+
+Estos logs son útiles para confirmar que el ESP32 está ejecutando el binario
+correcto y no una versión anterior.
+
+------------------------------------------------------------
+
+### Log de Comando Recibido desde la Web
+
+Cuando el usuario envía una acción desde la interfaz web, el servidor web
+genera un log como el siguiente:
+
+```text
+I (19560) WEB_SERVER: WEB_CMD APPLY_CONFIG t=5000 q=4 color=9 save=1 start=1
+```
+
+Explicación:
+
+- `WEB_CMD APPLY_CONFIG` indica que la web recibió una solicitud para aplicar configuración
+- `t=5000` representa el tiempo de blink en milisegundos
+- `q=4` representa la cantidad de pulsos
+- `color=9` representa el color solicitado
+- `save=1` indica que la configuración debe guardarse en NVS
+- `start=1` indica que además debe iniciarse el ensayo
+
+Este log confirma que el comando fue correctamente interpretado por el módulo web.
+
+------------------------------------------------------------
+
+### Log de Encolado del Comando
+
+Una vez recibido, el comando no se ejecuta directamente desde la web.
+Primero se coloca en la cola principal del sistema:
+
+```text
+I (19560) APP_QUEUE: CMD queued type=3
+```
+
+Explicación:
+
+- `CMD queued` indica que el comando fue agregado a la cola RTOS
+- `type=3` identifica internamente el tipo de comando enviado
+
+Este log demuestra que la comunicación entre WEB y CORE ocurre de forma desacoplada.
+
+------------------------------------------------------------
+
+### Log de Procesamiento en CORE_TASK
+
+La tarea `CORE_TASK` toma el comando desde la cola y comienza a procesarlo:
+
+```text
+I (19570) CORE_TASK: CORE processing CMD type=3
+I (19570) CORE_TASK: CMD APPLY_CONFIG
+```
+
+Explicación:
+
+- `CORE processing CMD type=3` indica que la tarea CORE extrajo el comando de la cola
+- `CMD APPLY_CONFIG` indica qué acción lógica se decidió ejecutar
+
+Este es uno de los logs más importantes de Fase 3 porque muestra claramente
+la separación entre productor de comandos y consumidor de comandos.
+
+------------------------------------------------------------
+
+### Log de Inicio del Ensayo
+
+Cuando la tarea CORE inicia el ensayo, aparece un log como este:
+
+```text
+I (35360) CORE_TASK: ENSAYO START color=1 pulses=4 blink=1000ms
+```
+
+Explicación:
+
+- `ENSAYO START` indica el inicio del ciclo de prueba
+- `color=1` indica el color que se aplicará al LED
+- `pulses=4` indica la cantidad total de pulsos
+- `blink=1000ms` indica la duración configurada del blink
+
+Este log marca el punto exacto donde la lógica de aplicación comienza a ejecutarse.
+
+------------------------------------------------------------
+
+### Logs de Progreso del Ensayo
+
+Durante la ejecución se informa cuántos pulsos restan:
+
+```text
+I (37360) CORE_TASK: PULSE remaining=3
+I (39360) CORE_TASK: PULSE remaining=2
+I (41360) CORE_TASK: PULSE remaining=1
+I (43360) CORE_TASK: PULSE remaining=0
+```
+
+Explicación:
+
+- `PULSE remaining=N` indica la cantidad de pulsos pendientes
+- estos logs permiten seguir el avance del ensayo en tiempo real
+
+Son útiles para validar temporización, lógica de decremento y secuencia de ejecución.
+
+------------------------------------------------------------
+
+### Log de Finalización
+
+Cuando el ensayo termina correctamente se genera el siguiente log:
+
+```text
+I (43360) CORE_TASK: ENSAYO FINISHED
+```
+
+Explicación:
+
+- `ENSAYO FINISHED` indica que el ciclo completo finalizó
+- confirma que todos los pulsos fueron ejecutados y que la tarea terminó el proceso esperado
+
+------------------------------------------------------------
+
+### Ejemplo Completo de Flujo
+
+El siguiente bloque resume el flujo real de Fase 3:
+
+```text
+I (19560) WEB_SERVER: WEB_CMD APPLY_CONFIG t=5000 q=4 color=9 save=1 start=1
+I (19560) APP_QUEUE: CMD queued type=3
+I (19570) CORE_TASK: CORE processing CMD type=3
+I (19570) CORE_TASK: CMD APPLY_CONFIG
+I (19580) CORE_TASK: ENSAYO START color=9 pulses=4 blink=5000ms
+I (35330) WEB_SERVER: WEB_CMD APPLY_CONFIG t=1000 q=4 color=1 save=1 start=1
+I (35330) APP_QUEUE: CMD queued type=3
+I (35340) CORE_TASK: CORE processing CMD type=3
+I (35340) CORE_TASK: CMD APPLY_CONFIG
+I (35360) CORE_TASK: ENSAYO START color=1 pulses=4 blink=1000ms
+I (37360) CORE_TASK: PULSE remaining=3
+I (39360) CORE_TASK: PULSE remaining=2
+I (41360) CORE_TASK: PULSE remaining=1
+I (43360) CORE_TASK: PULSE remaining=0
+I (43360) CORE_TASK: ENSAYO FINISHED
+```
+
+Este flujo permite ver claramente la secuencia:
+
+1. la web recibe el comando
+2. la cola lo transporta
+3. la tarea CORE lo procesa
+4. el ensayo se ejecuta
+5. el sistema informa su finalización
+
+------------------------------------------------------------
+
+### Objetivo Didáctico de Estos Logs
+
+Estos logs no solo sirven para depurar.
+
+También ayudan a mostrar, de manera concreta, la transición desde una arquitectura
+secuencial estilo Arduino hacia una arquitectura concurrente basada en FreeRTOS.
+
+En Fase 3 ya no existe control directo desde la web hacia el hardware.
+
+La arquitectura pasa a ser:
+
+- WEB como productor de comandos
+- APP_QUEUE como canal de comunicación
+- CORE_TASK como ejecutor de la lógica de control
+
+Esto representa un paso real hacia un firmware embebido profesional,
+modular y desacoplado.
+
+
+------------------------------------------------------------
+
+## Demo Visual
+
+A continuación se muestra una vista de la interfaz web y una demo breve del sistema
+en funcionamiento, incluyendo la interacción desde navegador, la ejecución del blink
+en el LED físico y la salida de logs por consola.
+
+### Video de Demo
+
+[![Ver demo del sistema](images/web.png)](images/fase3_end.mp4)
+
+> Hacer clic sobre la imagen para reproducir la demo.
+
+### Captura de la Interfaz Web
+
+![Interfaz web de control](images/web.png)
+
+La interfaz permite:
+
+- configurar el tiempo de blink
+- definir la cantidad de pulsos
+- seleccionar el color activo
+- iniciar o detener la secuencia desde la web
+
+En esta fase, la web actúa únicamente como productor de comandos.
+La ejecución real del comportamiento queda desacoplada y delegada al sistema interno
+basado en cola de eventos y tarea de control.
+
+------------------------------------------------------------
+
+### Objetivo Didáctico de Estos Logs
+
+Estos logs no solo sirven para depurar.
+
+También ayudan a mostrar, de manera concreta, la transición desde una arquitectura
+secuencial estilo Arduino hacia una arquitectura concurrente basada en FreeRTOS.
+
+En Fase 3 ya no existe control directo desde la web hacia el hardware.
+
+La arquitectura pasa a ser:
+
+- WEB como productor de comandos
+- APP_QUEUE como canal de comunicación
+- CORE_TASK como ejecutor de la lógica de control
+
+Esto representa un paso real hacia un firmware embebido profesional,
+modular y desacoplado.
+
 Autor: theinsideshine
 Licencia: MIT
+
+
