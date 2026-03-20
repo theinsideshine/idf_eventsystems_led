@@ -595,10 +595,10 @@ en funcionamiento, incluyendo:
 
 
 
+[![Fase1/2-Parte1](images/video1.png)](https://youtu.be/ONvmDDQ5sRU)
 
-[![[Fase1/2-Parte2](images/video1.png)](https://youtu.be/0D02RkZkKXw)
 
-[![Fase1/2-Parte1](images/video2.png)](https://youtu.be/ONvmDDQ5sRU)
+[![Fase1/2-Parte2](images/video2.png)](https://youtu.be/0D02RkZkKXw)
 
 
 > Hacer clic sobre la imagen para reproducir la demo en YouTube.
