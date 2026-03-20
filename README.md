@@ -590,6 +590,15 @@ en funcionamiento, incluyendo:
 
 [![Ver demo del sistema](images/web.png)](https://youtu.be/RoU0ydMRaP4)
 
+
+### FASE 1/2
+
+[![Fase1/2-Parte1](images/video1.png)](https://youtu.be/ONvmDDQ5sRU)
+
+
+[![[Fase1/2-Parte2](images/video2.png)]()
+
+
 > Hacer clic sobre la imagen para reproducir la demo en YouTube.
 
 
