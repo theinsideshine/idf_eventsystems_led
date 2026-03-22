@@ -626,6 +626,3 @@ modular y desacoplado.
 
 Autor: theinsideshine
 Licencia: MIT
-
-
-https://youtu.be/HFf9titvheg
