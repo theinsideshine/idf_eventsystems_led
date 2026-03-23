@@ -7,6 +7,6 @@ var searchData=
   ['completo_20de_20flujo_4',['Ejemplo Completo de Flujo',['../index.html#autotoc_md45',1,'']]],
   ['conectividad_5',['Fase 2 - Configuración Persistente y Conectividad',['../index.html#autotoc_md16',1,'']]],
   ['configuración_20persistente_20y_20conectividad_6',['Fase 2 - Configuración Persistente y Conectividad',['../index.html#autotoc_md16',1,'']]],
-  ['core_7',['Fase 3 - Separación de Tareas (WEB + CORE)',['../index.html#autotoc_md23',1,'']]],
+  ['core_20actual_7',['Fase 3 - Separación de Tareas (WEB + CORE) Actual',['../index.html#autotoc_md23',1,'']]],
   ['core_5ftask_8',['Log de Procesamiento en CORE_TASK',['../index.html#autotoc_md37',1,'']]]
 ];

@@ -1,7 +1,9 @@
 var web__server_8c =
 [
     [ "get_color_name", "web__server_8c.html#a961e678c51bf3c833ac0bfb078bfa037", null ],
+    [ "get_domain_status_name", "web__server_8c.html#a812da87a98098a7a09c208194ef0255e", null ],
     [ "get_handler", "web__server_8c.html#afcbb48d855a9694e7f2675ec54c91a95", null ],
+    [ "get_last_result_name", "web__server_8c.html#a66f99055996398f4397398d2607b2730", null ],
     [ "get_query_u32", "web__server_8c.html#ae00dcea5745c2c0ad601cdfba82264b0", null ],
     [ "save_handler", "web__server_8c.html#a3c6ec47307ccc27b733e8f8393c9e677", null ],
     [ "start_webserver", "web__server_8c.html#a440992a6db6af61fb71e65ddf68e71b0", null ],

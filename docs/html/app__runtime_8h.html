@@ -101,7 +101,7 @@ Include dependency graph for app_runtime.h:</div>
 </div><div class="textblock"><div class="dynheader">
 This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="app__runtime_8h__dep__incl.svg" width="608" height="128"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><div class="zoom"><iframe scrolling="no" loading="lazy" frameborder="0" src="app__runtime_8h__dep__incl.svg" width="100%" height="396"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div></div>
 </div>
 </div>
 <p><a href="app__runtime_8h_source.html">Go to the source code of this file.</a></p>
@@ -117,19 +117,69 @@ Enumerations</h2></td></tr>
 , <a class="el" href="#a5bb27460721cc90620d197fabf50d4bba2da5cd6cde677ab2c3facad416d893de">APP_STATE_LED_ON</a>
 , <a class="el" href="#a5bb27460721cc90620d197fabf50d4bba83c0776affac28050e92d85ef2f44efd">APP_STATE_LED_OFF</a>
  }</td></tr>
+<tr class="memitem:a02641985bea7fc383e0be5b99b14cbad" id="r_a02641985bea7fc383e0be5b99b14cbad"><td class="memItemLeft">enum &#160;</td><td class="memItemRight"><a class="el" href="#a02641985bea7fc383e0be5b99b14cbad">app_domain_status_t</a> { <a class="el" href="#a02641985bea7fc383e0be5b99b14cbadab78ab268e1fa75d36419111cbbe9fc7b">APP_DOMAIN_IDLE</a> = 0
+, <a class="el" href="#a02641985bea7fc383e0be5b99b14cbada0e5c91e92858eb5dc46ceab579c3fb87">APP_DOMAIN_RUNNING</a>
+ }</td></tr>
+<tr class="memitem:a68f1d7e035c4e2d544ca9cb72a1459bb" id="r_a68f1d7e035c4e2d544ca9cb72a1459bb"><td class="memItemLeft">enum &#160;</td><td class="memItemRight"><a class="el" href="#a68f1d7e035c4e2d544ca9cb72a1459bb">app_result_t</a> { <a class="el" href="#a68f1d7e035c4e2d544ca9cb72a1459bba5dc3a7182330a1935de46bebb2b64a14">APP_RESULT_NONE</a> = 0
+, <a class="el" href="#a68f1d7e035c4e2d544ca9cb72a1459bbab5f533599dd7497a4a741abeecb7e537">APP_RESULT_FINISHED</a>
+, <a class="el" href="#a68f1d7e035c4e2d544ca9cb72a1459bbadba2c5fdd835c17e5690947756c93bae">APP_RESULT_STOPPED</a>
+, <a class="el" href="#a68f1d7e035c4e2d544ca9cb72a1459bbad0c0bfb9907910de68a9f696e301c881">APP_RESULT_REJECTED</a>
+ }</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a3cd4fe475b0557fec78f3b43b28ef64d" id="r_a3cd4fe475b0557fec78f3b43b28ef64d"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a3cd4fe475b0557fec78f3b43b28ef64d">app_runtime_init</a> (void)</td></tr>
-<tr class="memitem:af78e6f6d6cbd83d559be959fbd1ba18b" id="r_af78e6f6d6cbd83d559be959fbd1ba18b"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#af78e6f6d6cbd83d559be959fbd1ba18b">app_runtime_is_running</a> (void)</td></tr>
 <tr class="memitem:a603589f7cbca8b1d24eaea5e9d467bd5" id="r_a603589f7cbca8b1d24eaea5e9d467bd5"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a603589f7cbca8b1d24eaea5e9d467bd5">app_runtime_set_running</a> (bool running)</td></tr>
-<tr class="memitem:af5e97f5160184b0e14e2584913b74936" id="r_af5e97f5160184b0e14e2584913b74936"><td class="memItemLeft">uint32_t&#160;</td><td class="memItemRight"><a class="el" href="#af5e97f5160184b0e14e2584913b74936">app_runtime_get_remaining</a> (void)</td></tr>
+<tr class="memitem:af78e6f6d6cbd83d559be959fbd1ba18b" id="r_af78e6f6d6cbd83d559be959fbd1ba18b"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#af78e6f6d6cbd83d559be959fbd1ba18b">app_runtime_is_running</a> (void)</td></tr>
 <tr class="memitem:aa327ac7f5b88734e3f3bb64e551eba6a" id="r_aa327ac7f5b88734e3f3bb64e551eba6a"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#aa327ac7f5b88734e3f3bb64e551eba6a">app_runtime_set_remaining</a> (uint32_t remaining)</td></tr>
-<tr class="memitem:aee6d51e8210a818bcdbe04537ca3d706" id="r_aee6d51e8210a818bcdbe04537ca3d706"><td class="memItemLeft"><a class="el" href="#a5bb27460721cc90620d197fabf50d4bb">app_state_t</a>&#160;</td><td class="memItemRight"><a class="el" href="#aee6d51e8210a818bcdbe04537ca3d706">app_runtime_get_state</a> (void)</td></tr>
+<tr class="memitem:af5e97f5160184b0e14e2584913b74936" id="r_af5e97f5160184b0e14e2584913b74936"><td class="memItemLeft">uint32_t&#160;</td><td class="memItemRight"><a class="el" href="#af5e97f5160184b0e14e2584913b74936">app_runtime_get_remaining</a> (void)</td></tr>
 <tr class="memitem:aecdba6ce6ebb30ec00a80031b1358ac2" id="r_aecdba6ce6ebb30ec00a80031b1358ac2"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#aecdba6ce6ebb30ec00a80031b1358ac2">app_runtime_set_state</a> (<a class="el" href="#a5bb27460721cc90620d197fabf50d4bb">app_state_t</a> state)</td></tr>
+<tr class="memitem:aee6d51e8210a818bcdbe04537ca3d706" id="r_aee6d51e8210a818bcdbe04537ca3d706"><td class="memItemLeft"><a class="el" href="#a5bb27460721cc90620d197fabf50d4bb">app_state_t</a>&#160;</td><td class="memItemRight"><a class="el" href="#aee6d51e8210a818bcdbe04537ca3d706">app_runtime_get_state</a> (void)</td></tr>
+<tr class="memitem:aa9579b5f7a76f8cf3f48519b9ed29e04" id="r_aa9579b5f7a76f8cf3f48519b9ed29e04"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#aa9579b5f7a76f8cf3f48519b9ed29e04">app_runtime_set_domain_status</a> (<a class="el" href="#a02641985bea7fc383e0be5b99b14cbad">app_domain_status_t</a> status)</td></tr>
+<tr class="memitem:a1c1536cccc54a9445f239a8ad896e525" id="r_a1c1536cccc54a9445f239a8ad896e525"><td class="memItemLeft"><a class="el" href="#a02641985bea7fc383e0be5b99b14cbad">app_domain_status_t</a>&#160;</td><td class="memItemRight"><a class="el" href="#a1c1536cccc54a9445f239a8ad896e525">app_runtime_get_domain_status</a> (void)</td></tr>
+<tr class="memitem:af466f49d3df44d1169d5c0d612e032d6" id="r_af466f49d3df44d1169d5c0d612e032d6"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#af466f49d3df44d1169d5c0d612e032d6">app_runtime_set_last_result</a> (<a class="el" href="#a68f1d7e035c4e2d544ca9cb72a1459bb">app_result_t</a> result)</td></tr>
+<tr class="memitem:a6f82f9609379f793a456ebf21e669d1c" id="r_a6f82f9609379f793a456ebf21e669d1c"><td class="memItemLeft"><a class="el" href="#a68f1d7e035c4e2d544ca9cb72a1459bb">app_result_t</a>&#160;</td><td class="memItemRight"><a class="el" href="#a6f82f9609379f793a456ebf21e669d1c">app_runtime_get_last_result</a> (void)</td></tr>
 <tr class="memitem:a7eb987827b90888da5e0f352eacd8436" id="r_a7eb987827b90888da5e0f352eacd8436"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a7eb987827b90888da5e0f352eacd8436">app_runtime_get_copy</a> (<a class="el" href="structapp__runtime__t.html">app_runtime_t</a> *out)</td></tr>
 </table>
 <a name="doc-enum-members" id="doc-enum-members"></a><h2 id="header-doc-enum-members" class="groupheader">Enumeration Type Documentation</h2>
+<a id="a02641985bea7fc383e0be5b99b14cbad" name="a02641985bea7fc383e0be5b99b14cbad"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a02641985bea7fc383e0be5b99b14cbad">&#9670;&#160;</a></span>app_domain_status_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="#a02641985bea7fc383e0be5b99b14cbad">app_domain_status_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a02641985bea7fc383e0be5b99b14cbadab78ab268e1fa75d36419111cbbe9fc7b" name="a02641985bea7fc383e0be5b99b14cbadab78ab268e1fa75d36419111cbbe9fc7b"></a>APP_DOMAIN_IDLE&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a02641985bea7fc383e0be5b99b14cbada0e5c91e92858eb5dc46ceab579c3fb87" name="a02641985bea7fc383e0be5b99b14cbada0e5c91e92858eb5dc46ceab579c3fb87"></a>APP_DOMAIN_RUNNING&#160;</td><td class="fielddoc"></td></tr>
+</table>
+
+</div>
+</div>
+<a id="a68f1d7e035c4e2d544ca9cb72a1459bb" name="a68f1d7e035c4e2d544ca9cb72a1459bb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a68f1d7e035c4e2d544ca9cb72a1459bb">&#9670;&#160;</a></span>app_result_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="#a68f1d7e035c4e2d544ca9cb72a1459bb">app_result_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a68f1d7e035c4e2d544ca9cb72a1459bba5dc3a7182330a1935de46bebb2b64a14" name="a68f1d7e035c4e2d544ca9cb72a1459bba5dc3a7182330a1935de46bebb2b64a14"></a>APP_RESULT_NONE&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a68f1d7e035c4e2d544ca9cb72a1459bbab5f533599dd7497a4a741abeecb7e537" name="a68f1d7e035c4e2d544ca9cb72a1459bbab5f533599dd7497a4a741abeecb7e537"></a>APP_RESULT_FINISHED&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a68f1d7e035c4e2d544ca9cb72a1459bbadba2c5fdd835c17e5690947756c93bae" name="a68f1d7e035c4e2d544ca9cb72a1459bbadba2c5fdd835c17e5690947756c93bae"></a>APP_RESULT_STOPPED&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a68f1d7e035c4e2d544ca9cb72a1459bbad0c0bfb9907910de68a9f696e301c881" name="a68f1d7e035c4e2d544ca9cb72a1459bbad0c0bfb9907910de68a9f696e301c881"></a>APP_RESULT_REJECTED&#160;</td><td class="fielddoc"></td></tr>
+</table>
+
+</div>
+</div>
 <a id="a5bb27460721cc90620d197fabf50d4bb" name="a5bb27460721cc90620d197fabf50d4bb"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a5bb27460721cc90620d197fabf50d4bb">&#9670;&#160;</a></span>app_state_t</h2>
 
@@ -170,6 +220,40 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="app__runtime_8h_a7eb987827b90888da5e0f352eacd8436_icgraph.svg" width="480" height="88"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
+
+</div>
+</div>
+<a id="a1c1536cccc54a9445f239a8ad896e525" name="a1c1536cccc54a9445f239a8ad896e525"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1c1536cccc54a9445f239a8ad896e525">&#9670;&#160;</a></span>app_runtime_get_domain_status()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#a02641985bea7fc383e0be5b99b14cbad">app_domain_status_t</a> app_runtime_get_domain_status </td>
+          <td>(</td>
+          <td class="paramtype">void</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a6f82f9609379f793a456ebf21e669d1c" name="a6f82f9609379f793a456ebf21e669d1c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6f82f9609379f793a456ebf21e669d1c">&#9670;&#160;</a></span>app_runtime_get_last_result()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#a68f1d7e035c4e2d544ca9cb72a1459bb">app_result_t</a> app_runtime_get_last_result </td>
+          <td>(</td>
+          <td class="paramtype">void</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>
@@ -256,7 +340,51 @@ Here is the caller graph for this function:</div>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><div class="zoom"><iframe scrolling="no" loading="lazy" frameborder="0" src="app__runtime_8h_af78e6f6d6cbd83d559be959fbd1ba18b_icgraph.svg" width="100%" height="366"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div></div>
+<div class="center"><div class="zoom"><iframe scrolling="no" loading="lazy" frameborder="0" src="app__runtime_8h_af78e6f6d6cbd83d559be959fbd1ba18b_icgraph.svg" width="100%" height="454"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div></div>
+</div>
+
+</div>
+</div>
+<a id="aa9579b5f7a76f8cf3f48519b9ed29e04" name="aa9579b5f7a76f8cf3f48519b9ed29e04"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa9579b5f7a76f8cf3f48519b9ed29e04">&#9670;&#160;</a></span>app_runtime_set_domain_status()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void app_runtime_set_domain_status </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="#a02641985bea7fc383e0be5b99b14cbad">app_domain_status_t</a></td>          <td class="paramname"><span class="paramname"><em>status</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="app__runtime_8h_aa9579b5f7a76f8cf3f48519b9ed29e04_icgraph.svg" width="515" height="88"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+
+</div>
+</div>
+<a id="af466f49d3df44d1169d5c0d612e032d6" name="af466f49d3df44d1169d5c0d612e032d6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af466f49d3df44d1169d5c0d612e032d6">&#9670;&#160;</a></span>app_runtime_set_last_result()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void app_runtime_set_last_result </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="#a68f1d7e035c4e2d544ca9cb72a1459bb">app_result_t</a></td>          <td class="paramname"><span class="paramname"><em>result</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="app__runtime_8h_af466f49d3df44d1169d5c0d612e032d6_icgraph.svg" width="528" height="155"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>
@@ -278,7 +406,7 @@ Here is the caller graph for this function:</div>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><div class="zoom"><iframe scrolling="no" loading="lazy" frameborder="0" src="app__runtime_8h_aa327ac7f5b88734e3f3bb64e551eba6a_icgraph.svg" width="100%" height="404"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div></div>
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="app__runtime_8h_aa327ac7f5b88734e3f3bb64e551eba6a_icgraph.svg" width="530" height="88"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>
@@ -300,7 +428,7 @@ Here is the caller graph for this function:</div>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><div class="zoom"><iframe scrolling="no" loading="lazy" frameborder="0" src="app__runtime_8h_a603589f7cbca8b1d24eaea5e9d467bd5_icgraph.svg" width="100%" height="404"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div></div>
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="app__runtime_8h_a603589f7cbca8b1d24eaea5e9d467bd5_icgraph.svg" width="515" height="88"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>
@@ -322,7 +450,7 @@ Here is the caller graph for this function:</div>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><div class="zoom"><iframe scrolling="no" loading="lazy" frameborder="0" src="app__runtime_8h_aecdba6ce6ebb30ec00a80031b1358ac2_icgraph.svg" width="100%" height="404"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div></div>
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="app__runtime_8h_aecdba6ce6ebb30ec00a80031b1358ac2_icgraph.svg" width="502" height="88"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>

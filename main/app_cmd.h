@@ -19,7 +19,6 @@ typedef struct
     uint32_t led_blink_quantity;
     uint32_t led_color;
     bool save_to_nvs;
-    bool start_after_apply;
 
 } app_apply_config_t;
 

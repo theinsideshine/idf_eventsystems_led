@@ -588,7 +588,7 @@ en funcionamiento, incluyendo:
 
 ### Video de Demo
 
-[![Ver demo del sistema](images/web.png)](https://youtu.be/HFf9titvheg)
+[![Ver demo del sistema](images/web.png)](https://youtu.be/KUGWflF_wo0)
 
 > Hacer clic sobre la imagen para reproducir la demo en YouTube.
 
@@ -624,8 +624,275 @@ La arquitectura pasa a ser:
 Esto representa un paso real hacia un firmware embebido profesional,
 modular y desacoplado.
 
+------------------------------------------------------------
+
+# Fase 4 - Arquitectura Orientada a Eventos (Actual)
+
+Esta fase introduce un cambio conceptual importante en la arquitectura.
+
+El sistema deja de estar basado en comandos directos entre módulos y pasa a
+estar basado en eventos.
+
+La web ya no envía comandos directamente a la cola.
+
+En su lugar, publica eventos de intención.
+
+------------------------------------------------------------
+
+## Concepto Clave
+
+Antes (Fase 3):
+
+WEB -> QUEUE -> CORE_TASK
+
+Ahora (Fase 4):
+
+WEB -> EVENTOS -> HANDLER -> QUEUE -> CORE_TASK
+
+------------------------------------------------------------
+
+## Flujo del Sistema
+
+1. El usuario interactúa desde la web
+2. El servidor web publica eventos
+3. Un manejador de eventos (coordinador) procesa esos eventos
+4. El manejador traduce eventos a comandos internos
+5. La cola transporta esos comandos hacia CORE_TASK
+6. CORE_TASK ejecuta la lógica del ensayo
+7. CORE_TASK publica eventos de resultado
+
+------------------------------------------------------------
+
+## Eventos Introducidos
+
+Eventos de entrada (intención):
+
+- APP_EVENT_CONFIG_UPDATED
+- APP_EVENT_START_REQUESTED
+- APP_EVENT_STOP_REQUESTED
+
+Eventos de salida (resultado):
+
+- APP_EVENT_ENSAYO_STARTED
+- APP_EVENT_ENSAYO_FINISHED
+- APP_EVENT_ENSAYO_STOPPED
+
+------------------------------------------------------------
+
+## Módulo app_events
+
+Se introduce un nuevo módulo:
+
+app_events
+
+Responsabilidades:
+
+- definir el bus de eventos del sistema
+- registrar handlers
+- publicar eventos
+- actuar como coordinador
+
+Este módulo desacopla completamente la web de la ejecución.
+
+------------------------------------------------------------
+
+## Cambio en web_server
+
+Antes:
+
+WEB -> APP_QUEUE
+
+Ahora:
+
+WEB -> EVENTOS
+
+Ejemplo:
+
+Antes:
+WEB_CMD APPLY_CONFIG
+
+Ahora:
+WEB_EVENT CONFIG_UPDATED
+WEB_EVENT START_REQUESTED
+
+La web deja de conocer la cola y la ejecución interna.
+
+------------------------------------------------------------
+
+## Rol del Event Handler
+
+El manejador de eventos:
+
+- recibe eventos de intención
+- valida el estado del sistema
+- decide si la acción es válida
+- traduce a comandos internos (cola)
+
+Ejemplo:
+
+START_REQUESTED
+   -> validación
+   -> envío de APP_CMD_START a la cola
+
+------------------------------------------------------------
+
+## CORE_TASK (sin cambios estructurales)
+
+CORE_TASK mantiene su responsabilidad:
+
+- ejecutar la FSM del ensayo
+- controlar el LED
+- manejar temporización
+
+Pero ahora:
+
+- no recibe comandos de la web directamente
+- recibe comandos internos generados por eventos
+
+------------------------------------------------------------
+
+## Eventos de Resultado
+
+CORE_TASK ahora informa al sistema cuando ocurre algo importante:
+
+- inicio real del ensayo
+- finalización
+- detención
+
+Ejemplo:
+
+ENSAYO_STARTED
+ENSAYO_FINISHED
+ENSAYO_STOPPED
+
+Esto permite que otros módulos reaccionen sin acoplamiento.
+
+------------------------------------------------------------
+
+## Fase 4.1 - Estado de Dominio y Resultado
+
+Se agrega información semántica al runtime:
+
+app_runtime ahora incluye:
+
+- domain_status
+- last_result
+
+------------------------------------------------------------
+
+### domain_status
+
+Representa el estado global del sistema:
+
+- IDLE
+- RUNNING
+
+No depende de la FSM interna.
+
+------------------------------------------------------------
+
+### last_result
+
+Representa el último resultado observable del sistema:
+
+- NONE
+- FINISHED
+- STOPPED
+- REJECTED
+
+Esto permite distinguir claramente cómo terminó un ensayo.
+
+------------------------------------------------------------
+
+## Casos de Ejecución
+
+Inicio correcto:
+
+- START_REQUESTED
+- ENSAYO_STARTED
+- domain_status = RUNNING
+- last_result = NONE
+
+Finalización normal:
+
+- ENSAYO_FINISHED
+- domain_status = IDLE
+- last_result = FINISHED
+
+Detención manual:
+
+- STOP_REQUESTED
+- ENSAYO_STOPPED
+- domain_status = IDLE
+- last_result = STOPPED
+
+Rechazo:
+
+- START_REQUESTED mientras está corriendo
+- last_result = REJECTED
+
+------------------------------------------------------------
+
+## Cambios en la Interfaz Web
+
+La interfaz ahora muestra:
+
+- estado interno (FSM)
+- estado de dominio
+- último resultado
+
+Esto permite visualizar claramente el comportamiento del sistema.
+
+------------------------------------------------------------
+
+## Nueva Arquitectura
+
+Browser
+   |
+WEB SERVER
+   |
+EVENT BUS
+   |
+EVENT HANDLER (COORDINADOR)
+   |
+QUEUE (interna)
+   |
+CORE TASK
+   |
+LED / TEST
+
+------------------------------------------------------------
+
+## Ventajas de la Fase 4
+
+- desacoplamiento completo entre módulos
+- separación entre intención y ejecución
+- mejor trazabilidad del sistema
+- mayor claridad semántica
+- base para sistemas más complejos
+
+------------------------------------------------------------
+
+## Objetivo Didáctico
+
+Mostrar la transición desde:
+
+- control directo (Arduino)
+- comandos desacoplados (Fase 3)
+- eventos y coordinación (Fase 4)
+
+El sistema pasa de:
+
+"hacer cosas"
+
+a:
+
+"reaccionar a eventos"
+
+Esto representa un paso clave hacia firmware embebido profesional.
+
+
 Autor: theinsideshine
 Licencia: MIT
 
 
-https://youtu.be/HFf9titvheg

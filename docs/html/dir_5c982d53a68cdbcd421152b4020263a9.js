@@ -1,6 +1,8 @@
 var dir_5c982d53a68cdbcd421152b4020263a9 =
 [
     [ "app_cmd.h", "app__cmd_8h.html", "app__cmd_8h" ],
+    [ "app_events.c", "app__events_8c.html", "app__events_8c" ],
+    [ "app_events.h", "app__events_8h.html", "app__events_8h" ],
     [ "app_queue.c", "app__queue_8c.html", "app__queue_8c" ],
     [ "app_queue.h", "app__queue_8h.html", "app__queue_8h" ],
     [ "app_runtime.c", "app__runtime_8c.html", "app__runtime_8c" ],

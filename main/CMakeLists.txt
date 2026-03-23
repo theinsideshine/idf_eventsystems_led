@@ -3,6 +3,7 @@ idf_component_register(
         "blink_example_main.c"
         "app_runtime.c"
         "app_queue.c"
+        "app_events.c"
         "core_task.c"
         "led_control.c"
         "config_manager.c"

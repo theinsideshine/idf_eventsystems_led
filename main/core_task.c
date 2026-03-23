@@ -9,6 +9,7 @@
 #include "app_cmd.h"
 #include "app_queue.h"
 #include "app_runtime.h"
+#include "app_events.h"
 
 #include "config_manager.h"
 #include "led_control.h"
@@ -40,13 +41,6 @@ static void core_apply_config(const app_apply_config_t *cfg)
         led_set_color(&s_status_led, (led_color_t)config_get_led_color());
         led_off(&s_status_led);
     }
-
-    if (cfg->start_after_apply)
-    {
-        app_runtime_set_running(true);
-        app_runtime_set_remaining(0);
-        app_runtime_set_state(APP_STATE_INIT);
-    }
 }
 
 static void core_process_command(const app_cmd_t *cmd)
@@ -56,35 +50,55 @@ static void core_process_command(const app_cmd_t *cmd)
         return;
     }
 
-    ESP_LOGI(TAG, "CORE processing CMD type=%d", cmd->type);
+    ESP_LOGI(TAG, "CORE processing INTERNAL CMD type=%d", cmd->type);
 
     switch (cmd->type)
     {
         case APP_CMD_START:
 
-            ESP_LOGI(TAG, "CMD START");
+            ESP_LOGI(TAG, "INTERNAL CMD START");
 
-            app_runtime_set_running(true);
-            app_runtime_set_remaining(0);
-            app_runtime_set_state(APP_STATE_INIT);
+            if (!app_runtime_is_running())
+            {
+                app_runtime_set_running(true);
+                app_runtime_set_remaining(0);
+                app_runtime_set_state(APP_STATE_INIT);
+                app_runtime_set_domain_status(APP_DOMAIN_RUNNING);
+                app_runtime_set_last_result(APP_RESULT_NONE);
+            }
+            else
+            {
+                ESP_LOGW(TAG, "START ignorado: ensayo ya en ejecucion");
+                app_runtime_set_last_result(APP_RESULT_REJECTED);
+            }
 
             break;
 
         case APP_CMD_STOP:
+        {
+            bool was_running = app_runtime_is_running();
 
-            ESP_LOGI(TAG, "CMD STOP");
+            ESP_LOGI(TAG, "INTERNAL CMD STOP");
 
             app_runtime_set_running(false);
             app_runtime_set_remaining(0);
             app_runtime_set_state(APP_STATE_INIT);
+            app_runtime_set_domain_status(APP_DOMAIN_IDLE);
 
             led_off(&s_status_led);
 
+            if (was_running)
+            {
+                app_runtime_set_last_result(APP_RESULT_STOPPED);
+                app_events_publish_ensayo_stopped();
+            }
+
             break;
+        }
 
         case APP_CMD_APPLY_CONFIG:
 
-            ESP_LOGI(TAG, "CMD APPLY_CONFIG");
+            ESP_LOGI(TAG, "INTERNAL CMD APPLY_CONFIG");
 
             core_apply_config(&cmd->data.apply_config);
 
@@ -117,6 +131,11 @@ static void core_run_fsm(void)
                      (unsigned long)config_get_led_color(),
                      (unsigned long)config_get_led_blink_quantity(),
                      (unsigned long)config_get_led_blink_time());
+
+            app_runtime_set_domain_status(APP_DOMAIN_RUNNING);
+            app_runtime_set_last_result(APP_RESULT_NONE);
+
+            app_events_publish_ensayo_started();
 
             led_set_color(&s_status_led, (led_color_t)config_get_led_color());
 
@@ -171,10 +190,13 @@ static void core_run_fsm(void)
                     ESP_LOGI(TAG, "ENSAYO FINISHED");
 
                     app_runtime_set_running(false);
-
                     app_runtime_set_state(APP_STATE_INIT);
+                    app_runtime_set_domain_status(APP_DOMAIN_IDLE);
+                    app_runtime_set_last_result(APP_RESULT_FINISHED);
 
                     led_off(&s_status_led);
+
+                    app_events_publish_ensayo_finished();
                 }
             }
 

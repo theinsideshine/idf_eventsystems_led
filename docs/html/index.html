@@ -216,7 +216,7 @@ Fase 2 - Configuración Persistente y Conectividad</h1>
 <p>CONFIGURACIÓN (persistente) ESTADO DE EJECUCIÓN (volátil)</p>
 <hr  />
 <h1 class="doxsection"><a class="anchor" id="autotoc_md21"></a>
-Arquitectura Actual (Fase 2)</h1>
+Arquitectura (Fase 2)</h1>
 <p>Browser | WEB SERVER | config_manager | app_runtime | LED control</p>
 <p>El sistema ya incluye:</p>
 <ul>
@@ -228,7 +228,7 @@ Arquitectura Actual (Fase 2)</h1>
 <p>Pero la ejecución todavía está centralizada.</p>
 <hr  />
 <h1 class="doxsection"><a class="anchor" id="autotoc_md23"></a>
-Fase 3 - Separación de Tareas (WEB + CORE)</h1>
+Fase 3 - Separación de Tareas (WEB + CORE) Actual</h1>
 <p>Esta fase introduce una arquitectura RTOS real.</p>
 <p>Se crean dos tareas independientes:</p>
 <p>WEB TASK CORE TASK</p>
@@ -280,8 +280,8 @@ Logs de Arranque</h3>
 <p>Al inicio de <span class="tt"><a class="el" href="blink__example__main_8c.html#a630544a7f0a2cc40d8a7fefab7e2fe70">app_main()</a></span> se agregan los siguientes logs:</p>
 <div class="fragment"><div class="line">ESP_LOGI(<span class="stringliteral">&quot;BOOTCHK&quot;</span>, <span class="stringliteral">&quot;SW_VERSION=%s&quot;</span>, <a class="code hl_define" href="config__manager_8h.html#ad13f8dea3a5243219cd2109520fdefe4">SW_VERSION</a>);</div>
 <div class="line">ESP_LOGI(<span class="stringliteral">&quot;BOOTCHK&quot;</span>, <span class="stringliteral">&quot;Compiled: %s %s&quot;</span>, __DATE__, __TIME__);</div>
-<div class="line">ESP_LOGI(<a class="code hl_variable" href="app__queue_8c.html#a5a85b9c772bbeb480b209a3e6ea92b4c">TAG</a>, <span class="stringliteral">&quot;Inicializando Fase 3&quot;</span>);</div>
-<div class="ttc" id="aapp__queue_8c_html_a5a85b9c772bbeb480b209a3e6ea92b4c"><div class="ttname"><a href="app__queue_8c.html#a5a85b9c772bbeb480b209a3e6ea92b4c">TAG</a></div><div class="ttdeci">static const char * TAG</div><div class="ttdef"><b>Definition</b> app_queue.c:4</div></div>
+<div class="line">ESP_LOGI(<a class="code hl_variable" href="app__events_8c.html#a5a85b9c772bbeb480b209a3e6ea92b4c">TAG</a>, <span class="stringliteral">&quot;Inicializando Fase 3&quot;</span>);</div>
+<div class="ttc" id="aapp__events_8c_html_a5a85b9c772bbeb480b209a3e6ea92b4c"><div class="ttname"><a href="app__events_8c.html#a5a85b9c772bbeb480b209a3e6ea92b4c">TAG</a></div><div class="ttdeci">static const char * TAG</div><div class="ttdef"><b>Definition</b> app_events.c:15</div></div>
 <div class="ttc" id="aconfig__manager_8h_html_ad13f8dea3a5243219cd2109520fdefe4"><div class="ttname"><a href="config__manager_8h.html#ad13f8dea3a5243219cd2109520fdefe4">SW_VERSION</a></div><div class="ttdeci">#define SW_VERSION</div><div class="ttdef"><b>Definition</b> config_manager.h:24</div></div>
 </div><!-- fragment --><p>Ejemplo de salida:</p>
 <div class="fragment"><div class="line">I (420) BOOTCHK: SW_VERSION=3.0.3</div>
@@ -398,6 +398,43 @@ Ejemplo Completo de Flujo</h3>
 </ol>
 <hr  />
 <h3 class="doxsection"><a class="anchor" id="autotoc_md47"></a>
+Objetivo Didáctico de Estos Logs</h3>
+<p>Estos logs no solo sirven para depurar.</p>
+<p>También ayudan a mostrar, de manera concreta, la transición desde una arquitectura secuencial estilo Arduino hacia una arquitectura concurrente basada en FreeRTOS.</p>
+<p>En Fase 3 ya no existe control directo desde la web hacia el hardware.</p>
+<p>La arquitectura pasa a ser:</p>
+<ul>
+<li>WEB como productor de comandos</li>
+<li>APP_QUEUE como canal de comunicación</li>
+<li>CORE_TASK como ejecutor de la lógica de control</li>
+</ul>
+<p>Esto representa un paso real hacia un firmware embebido profesional, modular y desacoplado.</p>
+<hr  />
+<hr  />
+<h2 class="doxsection"><a class="anchor" id="autotoc_md50"></a>
+Demo Visual</h2>
+<p>A continuación se muestra una vista de la interfaz web y una demo del sistema en funcionamiento, incluyendo:</p>
+<ul>
+<li>interacción desde navegador</li>
+<li>ejecución del blink en el LED físico</li>
+<li>salida de logs en tiempo real</li>
+</ul>
+<h3 class="doxsection"><a class="anchor" id="autotoc_md51"></a>
+Video de Demo</h3>
+<p><a href="https://youtu.be/HFf9titvheg"><img src="images/web.png" alt="Ver demo del sistema" class="inline"/></a></p>
+<blockquote class="doxtable">
+<p>Hacer clic sobre la imagen para reproducir la demo en YouTube. </p>
+</blockquote>
+<p>La interfaz permite:</p>
+<ul>
+<li>configurar el tiempo de blink</li>
+<li>definir la cantidad de pulsos</li>
+<li>seleccionar el color activo</li>
+<li>iniciar o detener la secuencia desde la web</li>
+</ul>
+<p>En esta fase, la web actúa únicamente como productor de comandos. La ejecución real del comportamiento queda desacoplada y delegada al sistema interno basado en cola de eventos y tarea de control.</p>
+<hr  />
+<h3 class="doxsection"><a class="anchor" id="autotoc_md53"></a>
 Objetivo Didáctico de Estos Logs</h3>
 <p>Estos logs no solo sirven para depurar.</p>
 <p>También ayudan a mostrar, de manera concreta, la transición desde una arquitectura secuencial estilo Arduino hacia una arquitectura concurrente basada en FreeRTOS.</p>

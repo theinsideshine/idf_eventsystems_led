@@ -97,19 +97,20 @@ $(function(){initNavTree('web__server_8c.html','',''); });
 <code>#include &quot;esp_http_server.h&quot;</code><br />
 <code>#include &quot;esp_log.h&quot;</code><br />
 <code>#include &quot;<a class="el" href="web__server_8h_source.html">web_server.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="app__cmd_8h_source.html">app_cmd.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="app__queue_8h_source.html">app_queue.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="app__events_8h_source.html">app_events.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="app__runtime_8h_source.html">app_runtime.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="config__manager_8h_source.html">config_manager.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for web_server.c:</div>
 <div class="dyncontent">
-<div class="center"><div class="zoom"><iframe scrolling="no" loading="lazy" frameborder="0" src="web__server_8c__incl.svg" width="100%" height="496"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div></div>
+<div class="center"><div class="zoom"><iframe scrolling="no" loading="lazy" frameborder="0" src="web__server_8c__incl.svg" width="100%" height="440"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div></div>
 </div>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a961e678c51bf3c833ac0bfb078bfa037" id="r_a961e678c51bf3c833ac0bfb078bfa037"><td class="memItemLeft">static const char *&#160;</td><td class="memItemRight"><a class="el" href="#a961e678c51bf3c833ac0bfb078bfa037">get_color_name</a> (uint32_t color)</td></tr>
+<tr class="memitem:a812da87a98098a7a09c208194ef0255e" id="r_a812da87a98098a7a09c208194ef0255e"><td class="memItemLeft">static const char *&#160;</td><td class="memItemRight"><a class="el" href="#a812da87a98098a7a09c208194ef0255e">get_domain_status_name</a> (<a class="el" href="app__runtime_8h.html#a02641985bea7fc383e0be5b99b14cbad">app_domain_status_t</a> status)</td></tr>
+<tr class="memitem:a66f99055996398f4397398d2607b2730" id="r_a66f99055996398f4397398d2607b2730"><td class="memItemLeft">static const char *&#160;</td><td class="memItemRight"><a class="el" href="#a66f99055996398f4397398d2607b2730">get_last_result_name</a> (<a class="el" href="app__runtime_8h.html#a68f1d7e035c4e2d544ca9cb72a1459bb">app_result_t</a> result)</td></tr>
 <tr class="memitem:ae00dcea5745c2c0ad601cdfba82264b0" id="r_ae00dcea5745c2c0ad601cdfba82264b0"><td class="memItemLeft">static uint32_t&#160;</td><td class="memItemRight"><a class="el" href="#ae00dcea5745c2c0ad601cdfba82264b0">get_query_u32</a> (const char *query, const char *key, uint32_t default_value)</td></tr>
 <tr class="memitem:afcbb48d855a9694e7f2675ec54c91a95" id="r_afcbb48d855a9694e7f2675ec54c91a95"><td class="memItemLeft">static esp_err_t&#160;</td><td class="memItemRight"><a class="el" href="#afcbb48d855a9694e7f2675ec54c91a95">get_handler</a> (httpd_req_t *req)</td></tr>
 <tr class="memitem:adc7b4f6e2978a7866fa572b720f94d61" id="r_adc7b4f6e2978a7866fa572b720f94d61"><td class="memItemLeft">static esp_err_t&#160;</td><td class="memItemRight"><a class="el" href="#adc7b4f6e2978a7866fa572b720f94d61">status_handler</a> (httpd_req_t *req)</td></tr>
@@ -152,6 +153,36 @@ Here is the caller graph for this function:</div>
 
 </div>
 </div>
+<a id="a812da87a98098a7a09c208194ef0255e" name="a812da87a98098a7a09c208194ef0255e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a812da87a98098a7a09c208194ef0255e">&#9670;&#160;</a></span>get_domain_status_name()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char * get_domain_status_name </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="app__runtime_8h.html#a02641985bea7fc383e0be5b99b14cbad">app_domain_status_t</a></td>          <td class="paramname"><span class="paramname"><em>status</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="web__server_8c_a812da87a98098a7a09c208194ef0255e_icgraph.svg" width="498" height="88"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+
+</div>
+</div>
 <a id="afcbb48d855a9694e7f2675ec54c91a95" name="afcbb48d855a9694e7f2675ec54c91a95"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#afcbb48d855a9694e7f2675ec54c91a95">&#9670;&#160;</a></span>get_handler()</h2>
 
@@ -177,12 +208,42 @@ Here is the caller graph for this function:</div>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="web__server_8c_afcbb48d855a9694e7f2675ec54c91a95_cgraph.svg" width="319" height="256"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="web__server_8c_afcbb48d855a9694e7f2675ec54c91a95_cgraph.svg" width="319" height="358"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="web__server_8c_afcbb48d855a9694e7f2675ec54c91a95_icgraph.svg" width="387" height="38"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+
+</div>
+</div>
+<a id="a66f99055996398f4397398d2607b2730" name="a66f99055996398f4397398d2607b2730"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a66f99055996398f4397398d2607b2730">&#9670;&#160;</a></span>get_last_result_name()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char * get_last_result_name </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="app__runtime_8h.html#a68f1d7e035c4e2d544ca9cb72a1459bb">app_result_t</a></td>          <td class="paramname"><span class="paramname"><em>result</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="web__server_8c_a66f99055996398f4397398d2607b2730_icgraph.svg" width="474" height="88"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 
 </div>
@@ -251,7 +312,7 @@ Here is the caller graph for this function:</div>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="web__server_8c_a3c6ec47307ccc27b733e8f8393c9e677_cgraph.svg" width="328" height="256"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="web__server_8c_a3c6ec47307ccc27b733e8f8393c9e677_cgraph.svg" width="328" height="339"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
@@ -278,7 +339,7 @@ Here is the caller graph for this function:</div>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="web__server_8c_a440992a6db6af61fb71e65ddf68e71b0_cgraph.svg" width="499" height="358"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><div class="zoom"><iframe scrolling="no" loading="lazy" frameborder="0" src="web__server_8c_a440992a6db6af61fb71e65ddf68e71b0_cgraph.svg" width="100%" height="600"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div></div>
 </div>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
@@ -313,7 +374,7 @@ Here is the caller graph for this function:</div>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="web__server_8c_adc7b4f6e2978a7866fa572b720f94d61_cgraph.svg" width="318" height="38"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="web__server_8c_adc7b4f6e2978a7866fa572b720f94d61_cgraph.svg" width="336" height="139"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
@@ -348,7 +409,7 @@ Here is the caller graph for this function:</div>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="web__server_8c_a8c9c0e181cc00b9e84ab2af1e55a2723_cgraph.svg" width="274" height="38"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="web__server_8c_a8c9c0e181cc00b9e84ab2af1e55a2723_cgraph.svg" width="291" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 <div class="dynheader">
 Here is the caller graph for this function:</div>

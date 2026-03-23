@@ -39,7 +39,7 @@ var searchData=
   ['config_5fset_5fwifi_5fpass_36',['config_set_wifi_pass',['../config__manager_8c.html#a234b285941db0261f061f7011a749629',1,'config_set_wifi_pass(const char *value):&#160;config_manager.c'],['../config__manager_8h.html#a234b285941db0261f061f7011a749629',1,'config_set_wifi_pass(const char *value):&#160;config_manager.c']]],
   ['config_5fset_5fwifi_5fssid_37',['config_set_wifi_ssid',['../config__manager_8c.html#a2f0124c6d19e2bf2eab8fd3ddc56d3f7',1,'config_set_wifi_ssid(const char *value):&#160;config_manager.c'],['../config__manager_8h.html#a2f0124c6d19e2bf2eab8fd3ddc56d3f7',1,'config_set_wifi_ssid(const char *value):&#160;config_manager.c']]],
   ['configuración_20persistente_20y_20conectividad_38',['Fase 2 - Configuración Persistente y Conectividad',['../index.html#autotoc_md16',1,'']]],
-  ['core_39',['Fase 3 - Separación de Tareas (WEB + CORE)',['../index.html#autotoc_md23',1,'']]],
+  ['core_20actual_39',['Fase 3 - Separación de Tareas (WEB + CORE) Actual',['../index.html#autotoc_md23',1,'']]],
   ['core_5fapply_5fconfig_40',['core_apply_config',['../core__task_8c.html#a170cdd025de66ceaf05a6ee34a4fff98',1,'core_task.c']]],
   ['core_5fprocess_5fcommand_41',['core_process_command',['../core__task_8c.html#a2daa86fc13a12eb426414bbf8211eef3',1,'core_task.c']]],
   ['core_5frun_5ffsm_42',['core_run_fsm',['../core__task_8c.html#a80193b9cb4e785937ae283aafc30615c',1,'core_task.c']]],

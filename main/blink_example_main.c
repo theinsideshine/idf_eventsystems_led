@@ -1,11 +1,12 @@
 #include "esp_log.h"
+
 #include "app_queue.h"
 #include "app_runtime.h"
+#include "app_events.h"
 #include "config_manager.h"
 #include "core_task.h"
 #include "web_server.h"
 #include "wifi_manager.h"
-
 
 /*
 rmdir /s /q build
@@ -13,6 +14,7 @@ idf.py erase-flash
 idf.py build
 idf.py flash monitor
 */
+
 static const char *TAG = "MAIN";
 
 void app_main(void)
@@ -22,18 +24,25 @@ void app_main(void)
     ESP_LOGI("BOOTCHK", "SW_VERSION=%s", SW_VERSION);
     ESP_LOGI("BOOTCHK", "Compiled: %s %s", __DATE__, __TIME__);
 
-    ESP_LOGI(TAG, "Inicializando Fase 3");
+    ESP_LOGI(TAG, "Inicializando Fase 4");
 
     config_init(&boot_config);
     app_runtime_init();
 
     if (!app_queue_init())
     {
-        ESP_LOGE(TAG, "No se pudo crear la cola principal");
+        ESP_LOGE(TAG, "No se pudo crear la cola interna");
         return;
     }
 
     wifi_init_sta(&boot_config);
+
+    if (!app_events_init())
+    {
+        ESP_LOGE(TAG, "No se pudo registrar el sistema de eventos");
+        return;
+    }
+
     core_task_start();
     start_webserver();
 
