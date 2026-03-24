@@ -260,7 +260,7 @@ Pero la ejecución todavía está centralizada.
 
 ------------------------------------------------------------
 
-# Fase 3 - Separación de Tareas (WEB + CORE) Actual
+# Fase 3 - Separación de Tareas (WEB + CORE) 
 
 Esta fase introduce una arquitectura RTOS real.
 
@@ -293,7 +293,7 @@ APP_CMD_STOP
 
 ------------------------------------------------------------
 
-# Fase 4 - Sistema Completamente Orientado a Eventos
+# Fase 4 - Sistema Completamente Orientado a Eventos (Actual)
 
 El paso final convierte el firmware en una arquitectura completamente orientada a eventos.
 
@@ -589,6 +589,17 @@ en funcionamiento, incluyendo:
 ### Video de Demo
 
 [![Ver demo del sistema](images/web.png)](https://youtu.be/KUGWflF_wo0)
+
+
+### FASE 1/2
+
+
+
+[![Fase4-Parte1](images/video1.png)](https://youtu.be/3Th4_aNCwcc)
+
+
+[![Fase4-Parte2](images/video2.png)](https://youtu.be/wPU-klHYiZs)
+
 
 > Hacer clic sobre la imagen para reproducir la demo en YouTube.
 
