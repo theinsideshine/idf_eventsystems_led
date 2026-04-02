@@ -7,12 +7,10 @@
 #include "core_task.h"
 #include "web_server.h"
 #include "wifi_manager.h"
+#include "rainmaker_adapter.h"
 
 /*
-rmdir /s /q build
-idf.py erase-flash
-idf.py build
-idf.py flash monitor
+
 */
 
 static const char *TAG = "MAIN";
@@ -24,7 +22,7 @@ void app_main(void)
     ESP_LOGI("BOOTCHK", "SW_VERSION=%s", SW_VERSION);
     ESP_LOGI("BOOTCHK", "Compiled: %s %s", __DATE__, __TIME__);
 
-    ESP_LOGI(TAG, "Inicializando Fase 4");
+    ESP_LOGI(TAG, "Inicializando Fase 5");
 
     config_init(&boot_config);
     app_runtime_init();
@@ -45,6 +43,8 @@ void app_main(void)
 
     core_task_start();
     start_webserver();
+    rainmaker_adapter_init();
+    rainmaker_adapter_report_runtime();
 
     ESP_LOGI(TAG, "Sistema iniciado");
 }

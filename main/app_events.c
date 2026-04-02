@@ -10,6 +10,8 @@
 #include "app_queue.h"
 #include "app_runtime.h"
 
+#include "rainmaker_adapter.h"
+
 ESP_EVENT_DEFINE_BASE(APP_EVENTS);
 
 static const char *TAG = "APP_EVENTS";
@@ -106,14 +108,17 @@ static void app_internal_event_handler(void *handler_arg,
 
         case APP_EVENT_ENSAYO_STARTED:
             ESP_LOGI(TAG, "EVENT ENSAYO_STARTED");
+            rainmaker_adapter_report_runtime();
             break;
 
         case APP_EVENT_ENSAYO_FINISHED:
             ESP_LOGI(TAG, "EVENT ENSAYO_FINISHED");
+            rainmaker_adapter_report_runtime();
             break;
 
         case APP_EVENT_ENSAYO_STOPPED:
             ESP_LOGI(TAG, "EVENT ENSAYO_STOPPED");
+            rainmaker_adapter_report_runtime();
             break;
 
         default:

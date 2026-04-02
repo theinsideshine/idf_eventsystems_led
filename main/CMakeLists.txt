@@ -9,6 +9,7 @@ idf_component_register(
         "config_manager.c"
         "wifi_manager.c"
         "web_server.c"
+        "rainmaker_adapter.c"
     INCLUDE_DIRS "."
     PRIV_REQUIRES
         nvs_flash
@@ -16,4 +17,6 @@ idf_component_register(
         esp_event
         esp_netif
         esp_http_server
+        led_strip
+        esp_rainmaker
 )

@@ -8,7 +8,7 @@
 // DEFINES DE VALORES POR DEFECTO
 // ============================================================
 // Subimos el magic porque cambió la estructura persistida
-#define MAGIC_NUMBER                223
+#define MAGIC_NUMBER                564
 
 #define LED_BLINK_TIME_DEFAULT      1010
 #define LED_BLINK_QUANTITY_DEFAULT  3
@@ -21,7 +21,7 @@
 // ============================================================
 // VERSIÓN DEL SISTEMA
 // ============================================================
-#define SW_VERSION                  "4.0.2"
+#define SW_VERSION                  "5.0.10"
 
 // ============================================================
 // ESTRUCTURA DE CONFIGURACIÓN PERSISTENTE
