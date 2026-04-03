@@ -1,6 +1,5 @@
 #include "esp_log.h"
 #include "esp_err.h"
-#include "nvs_flash.h"
 
 /* RainMaker */
 #include "esp_rmaker_core.h"
@@ -71,19 +70,6 @@ bool rainmaker_adapter_init(void)
 {
     ESP_LOGI(TAG, "RainMaker init");
 
-    esp_err_t err = nvs_flash_init();
-    if (err == ESP_ERR_NVS_NO_FREE_PAGES || err == ESP_ERR_NVS_NEW_VERSION_FOUND)
-    {
-        ESP_ERROR_CHECK(nvs_flash_erase());
-        err = nvs_flash_init();
-    }
-
-    if (err != ESP_OK)
-    {
-        ESP_LOGE(TAG, "NVS init fallo: %s", esp_err_to_name(err));
-        return false;
-    }
-
     esp_rmaker_config_t cfg = {
         .enable_time_sync = false,
     };
@@ -133,9 +119,15 @@ bool rainmaker_adapter_init(void)
     }
 
     ESP_LOGI(TAG, "RainMaker iniciando cloud");
-    
 
-    esp_rmaker_start();
+    esp_err_t start_err = esp_rmaker_start();
+    if (start_err != ESP_OK)
+    {
+        ESP_LOGE(TAG, "esp_rmaker_start fallo: %s", esp_err_to_name(start_err));
+        return false;
+    }
+
+    ESP_LOGI(TAG, "RainMaker iniciado");
     return true;
 }
 

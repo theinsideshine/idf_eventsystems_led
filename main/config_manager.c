@@ -2,7 +2,6 @@
 #include <string.h>
 
 #include "config_manager.h"
-#include "nvs_flash.h"
 #include "nvs.h"
 #include "esp_log.h"
 
@@ -14,6 +13,22 @@ static const char *NVS_NAMESPACE = "storage";
 // NVS solo se toca desde este archivo.
 // ------------------------------------------------------------
 static system_config_t s_config;
+
+// ------------------------------------------------------------
+// Helper de log de config actual
+// ------------------------------------------------------------
+static void log_config(const char *prefix)
+{
+    ESP_LOGI(TAG,
+             "%s time=%lu qty=%lu color=%lu log=%lu ssid='%s' pass_len=%u",
+             prefix,
+             (unsigned long)s_config.led_blink_time,
+             (unsigned long)s_config.led_blink_quantity,
+             (unsigned long)s_config.led_color,
+             (unsigned long)s_config.log_level,
+             s_config.wifi_ssid,
+             (unsigned int)strlen(s_config.wifi_pass));
+}
 
 // ------------------------------------------------------------
 // Carga los valores por defecto en la copia RAM.
@@ -32,6 +47,8 @@ void config_set_defaults(void)
 
     strncpy(s_config.wifi_pass, WIFI_PASS_DEFAULT, sizeof(s_config.wifi_pass) - 1);
     s_config.wifi_pass[sizeof(s_config.wifi_pass) - 1] = '\0';
+
+    log_config("DEFAULTS");
 }
 
 // ------------------------------------------------------------
@@ -58,27 +75,20 @@ void config_set_copy(const system_config_t *config)
     }
 
     s_config = *config;
+    log_config("SET_COPY");
 }
 
 // ------------------------------------------------------------
-// Inicializa NVS y carga configuración.
+// Inicializa la configuracion del sistema.
+// NVS ya debe estar inicializada desde app_main().
 // ------------------------------------------------------------
-esp_err_t config_init(system_config_t *config)
+esp_err_t app_config_init(system_config_t *config)
 {
-    esp_err_t err = nvs_flash_init();
-
-    if (err == ESP_ERR_NVS_NO_FREE_PAGES ||
-        err == ESP_ERR_NVS_NEW_VERSION_FOUND)
-    {
-        ESP_ERROR_CHECK(nvs_flash_erase());
-        err = nvs_flash_init();
-    }
-
-    ESP_ERROR_CHECK(err);
+    ESP_LOGI(TAG, "app_config_init()");
 
     config_set_defaults();
 
-    err = config_load();
+    esp_err_t err = app_config_load();
     if (err != ESP_OK)
     {
         ESP_LOGW(TAG, "Se usaran valores por defecto");
@@ -88,6 +98,8 @@ esp_err_t config_init(system_config_t *config)
     {
         *config = s_config;
     }
+
+    log_config("INIT_FINAL");
 
     printf("\n");
     printf("**********************************************\n");
@@ -105,10 +117,49 @@ esp_err_t config_init(system_config_t *config)
 }
 
 // ------------------------------------------------------------
+// Borra SOLO el namespace propio del modulo ("storage").
+// No toca RainMaker ni provisioning.
+// ------------------------------------------------------------
+esp_err_t app_config_reset_storage(void)
+{
+    nvs_handle_t handle;
+    esp_err_t err;
+
+    ESP_LOGW(TAG, "Borrando namespace NVS '%s'...", NVS_NAMESPACE);
+
+    err = nvs_open(NVS_NAMESPACE, NVS_READWRITE, &handle);
+    if (err != ESP_OK)
+    {
+        ESP_LOGE(TAG, "nvs_open fallo en reset: %s", esp_err_to_name(err));
+        return err;
+    }
+
+    err = nvs_erase_all(handle);
+    if (err != ESP_OK)
+    {
+        ESP_LOGE(TAG, "nvs_erase_all fallo: %s", esp_err_to_name(err));
+        nvs_close(handle);
+        return err;
+    }
+
+    err = nvs_commit(handle);
+    nvs_close(handle);
+
+    if (err != ESP_OK)
+    {
+        ESP_LOGE(TAG, "nvs_commit fallo en reset: %s", esp_err_to_name(err));
+        return err;
+    }
+
+    ESP_LOGW(TAG, "Namespace '%s' borrado OK", NVS_NAMESPACE);
+    return ESP_OK;
+}
+
+// ------------------------------------------------------------
 // Carga la configuración desde NVS hacia la copia RAM privada.
 // Si no encuentra una configuración válida, deja defaults.
 // ------------------------------------------------------------
-esp_err_t config_load(void)
+esp_err_t app_config_load(void)
 {
     nvs_handle_t handle;
     esp_err_t err;
@@ -118,11 +169,15 @@ esp_err_t config_load(void)
     err = nvs_open(NVS_NAMESPACE, NVS_READWRITE, &handle);
     if (err != ESP_OK)
     {
-        ESP_LOGW(TAG, "No se pudo abrir NVS, usando defaults");
+        ESP_LOGW(TAG, "No se pudo abrir NVS, usando defaults: %s", esp_err_to_name(err));
         return err;
     }
 
     err = nvs_get_u32(handle, "magic", &magic);
+    ESP_LOGI(TAG, "LOAD magic read err=%s magic=0x%08lx",
+             esp_err_to_name(err),
+             (unsigned long)magic);
+
     if (err != ESP_OK || magic != MAGIC_NUMBER)
     {
         ESP_LOGW(TAG, "Primer inicio o config invalida. Cargando defaults...");
@@ -137,24 +192,52 @@ esp_err_t config_load(void)
 
         err = nvs_commit(handle);
         nvs_close(handle);
+
+        if (err == ESP_OK)
+        {
+            log_config("LOAD_DEFAULTS_SAVED");
+        }
+
         return err;
     }
 
     ESP_LOGI(TAG, "Configuracion encontrada en NVS. Cargando...");
 
-    // Si alguna clave falla, mantenemos el valor default ya cargado.
-    nvs_get_u32(handle, "b_time", &s_config.led_blink_time);
-    nvs_get_u32(handle, "b_qty", &s_config.led_blink_quantity);
-    nvs_get_u32(handle, "l_color", &s_config.led_color);
-    nvs_get_u32(handle, "log_lvl", &s_config.log_level);
+    err = nvs_get_u32(handle, "b_time", &s_config.led_blink_time);
+    ESP_LOGI(TAG, "LOAD b_time err=%s val=%lu",
+             esp_err_to_name(err),
+             (unsigned long)s_config.led_blink_time);
+
+    err = nvs_get_u32(handle, "b_qty", &s_config.led_blink_quantity);
+    ESP_LOGI(TAG, "LOAD b_qty err=%s val=%lu",
+             esp_err_to_name(err),
+             (unsigned long)s_config.led_blink_quantity);
+
+    err = nvs_get_u32(handle, "l_color", &s_config.led_color);
+    ESP_LOGI(TAG, "LOAD l_color err=%s val=%lu",
+             esp_err_to_name(err),
+             (unsigned long)s_config.led_color);
+
+    err = nvs_get_u32(handle, "log_lvl", &s_config.log_level);
+    ESP_LOGI(TAG, "LOAD log_lvl err=%s val=%lu",
+             esp_err_to_name(err),
+             (unsigned long)s_config.log_level);
 
     size = sizeof(s_config.wifi_ssid);
-    nvs_get_str(handle, "w_ssid", s_config.wifi_ssid, &size);
+    err = nvs_get_str(handle, "w_ssid", s_config.wifi_ssid, &size);
+    ESP_LOGI(TAG, "LOAD w_ssid err=%s val='%s'",
+             esp_err_to_name(err),
+             s_config.wifi_ssid);
 
     size = sizeof(s_config.wifi_pass);
-    nvs_get_str(handle, "w_pass", s_config.wifi_pass, &size);
+    err = nvs_get_str(handle, "w_pass", s_config.wifi_pass, &size);
+    ESP_LOGI(TAG, "LOAD w_pass err=%s len=%u",
+             esp_err_to_name(err),
+             (unsigned int)strlen(s_config.wifi_pass));
 
     nvs_close(handle);
+
+    log_config("LOAD_FINAL");
     return ESP_OK;
 }
 
@@ -162,7 +245,7 @@ esp_err_t config_load(void)
 // Guarda una configuración en NVS.
 // Si recibe un puntero externo, primero actualiza la copia RAM.
 // ------------------------------------------------------------
-esp_err_t config_save(system_config_t *config)
+esp_err_t app_config_save(system_config_t *config)
 {
     nvs_handle_t handle;
     esp_err_t err;
@@ -172,9 +255,12 @@ esp_err_t config_save(system_config_t *config)
         s_config = *config;
     }
 
+    log_config("SAVE_REQUEST");
+
     err = nvs_open(NVS_NAMESPACE, NVS_READWRITE, &handle);
     if (err != ESP_OK)
     {
+        ESP_LOGE(TAG, "nvs_open fallo en save: %s", esp_err_to_name(err));
         return err;
     }
 
@@ -188,6 +274,16 @@ esp_err_t config_save(system_config_t *config)
 
     err = nvs_commit(handle);
     nvs_close(handle);
+
+    if (err == ESP_OK)
+    {
+        ESP_LOGI(TAG, "SAVE commit OK");
+        log_config("SAVE_DONE");
+    }
+    else
+    {
+        ESP_LOGE(TAG, "SAVE commit fallo: %s", esp_err_to_name(err));
+    }
 
     return err;
 }

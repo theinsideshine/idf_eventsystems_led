@@ -33,7 +33,7 @@ static void core_apply_config(const app_apply_config_t *cfg)
 
     if (cfg->save_to_nvs)
     {
-        config_save(NULL);
+        app_config_save(NULL);
     }
 
     if (!app_runtime_is_running())

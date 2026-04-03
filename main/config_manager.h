@@ -8,7 +8,7 @@
 // DEFINES DE VALORES POR DEFECTO
 // ============================================================
 // Subimos el magic porque cambió la estructura persistida
-#define MAGIC_NUMBER                564
+#define MAGIC_NUMBER                5888
 
 #define LED_BLINK_TIME_DEFAULT      1010
 #define LED_BLINK_QUANTITY_DEFAULT  3
@@ -21,7 +21,7 @@
 // ============================================================
 // VERSIÓN DEL SISTEMA
 // ============================================================
-#define SW_VERSION                  "5.0.10"
+#define SW_VERSION                  "7.8.3"
 
 // ============================================================
 // ESTRUCTURA DE CONFIGURACIÓN PERSISTENTE
@@ -42,13 +42,13 @@ typedef struct
 // ============================================================
 // API PRINCIPAL
 // ============================================================
-esp_err_t config_init(system_config_t *config);
-esp_err_t config_save(system_config_t *config);
+esp_err_t app_config_init(system_config_t *config);
+esp_err_t app_config_save(system_config_t *config);
 
 // ============================================================
 // API INTERNA DE MEMORIA / COPIA RAM
 // ============================================================
-esp_err_t config_load(void);
+esp_err_t app_config_load(void);
 void config_set_defaults(void);
 
 // Getters

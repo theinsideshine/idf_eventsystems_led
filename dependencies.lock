@@ -151,8 +151,33 @@ dependencies:
       registry_url: https://components.espressif.com
       type: service
     version: 1.2.2
+  espressif/qrcode:
+    component_hash: 31e70991ce22f28d73a4386417fc9c0993f61e1aab1832474fd9e3db8da9dcbd
+    dependencies: []
+    source:
+      registry_url: https://components.espressif.com
+      type: service
+    version: 0.2.0
+  espressif/rmaker_app_network:
+    component_hash: b180e403b97f31eb4e2a9caf36caa6d96da5dfb6d727f679e258e3eb13fc5884
+    dependencies:
+    - name: espressif/network_provisioning
+      registry_url: https://components.espressif.com
+      require: private
+      version: ~1.2.1
+    - name: espressif/qrcode
+      registry_url: https://components.espressif.com
+      require: private
+      version: '*'
+    - name: idf
+      require: private
+      version: '>=5.1.0'
+    source:
+      registry_url: https://components.espressif.com/
+      type: service
+    version: 1.4.0
   espressif/rmaker_common:
-    component_hash: c7bcaed645c54c781bb9e75067fc213cf1ce1d0d71f7276621eadd02b89a71e9
+    component_hash: 3058746dc5083ca636cf18599ebc116fef595f510714a68c4d3ddcd45ee57e9b
     dependencies:
     - name: idf
       require: private
@@ -160,7 +185,7 @@ dependencies:
     source:
       registry_url: https://components.espressif.com
       type: service
-    version: 1.7.0
+    version: 1.7.1
   idf:
     source:
       type: idf
@@ -168,6 +193,7 @@ dependencies:
 direct_dependencies:
 - espressif/esp_rainmaker
 - espressif/led_strip
-manifest_hash: b690ceac55f36fce92e8dd79f62f70c7319149a34b7cefe61e2544ed890ef1d1
+- espressif/rmaker_app_network
+manifest_hash: 6b31a4281b4f5d934117a2cd3c614a2dcacf43bc5eb3e90dd6429670eee2eb1a
 target: esp32s3
 version: 2.0.0

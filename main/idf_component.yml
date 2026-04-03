@@ -1,3 +1,4 @@
 dependencies:
   espressif/led_strip: "^2.5.5"
   espressif/esp_rainmaker: "^1.12.1"
+  espressif/rmaker_app_network: "*"
