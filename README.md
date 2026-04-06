@@ -291,3 +291,28 @@ Base sólida para escalar a:
 * producción real
 
 ---
+
+
+## Demo Visual
+
+A continuación se muestra una videp de la interfaz mobile ejecutando el ensayo
+en funcionamiento, incluyendo:
+
+- interacción desde mobile
+- ejecución del blink en el LED físico
+
+
+### Video de Demo
+
+[![Ver demo del sistema](images/app.png)](https://youtu.be/_euNCqfbAiI)
+
+
+### FASE 5
+
+
+
+[![Fase4-Parte1](images/video1.png)](https://youtu.be/3Th4_aNCwcc)
+
+
+[![Fase4-Parte2](images/video2.png)](https://youtu.be/wPU-klHYiZs)
+
