@@ -304,7 +304,9 @@ en funcionamiento, incluyendo:
 
 ### Video de Demo
 
-[![Ver demo del sistema](images/app.jpg)](https://youtu.be/_euNCqfbAiI)
+<a href="https://youtu.be/_euNCqfbAiI">
+  <img src="images/app.jpg" alt="Ver demo del sistema" width="400">
+</a>
 
 
 ### FASE 5
